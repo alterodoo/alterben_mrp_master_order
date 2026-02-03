@@ -1,0 +1,25 @@
+/* Scope to Control Total wizard (form has class ct_assign_wizard) */
+
+/* Full-width grid inside modal (without changing modal size) */
+.o_dialog .ct_assign_wizard .o_group,
+.o_dialog .ct_assign_wizard .o_inner_group,
+.o_dialog .ct_assign_wizard .o_form_sheet,
+.o_dialog .ct_assign_wizard .o_field_x2many,
+.o_dialog .ct_assign_wizard .o_field_widget,
+.o_dialog .ct_assign_wizard .o_list_view {
+  width: 100% !important;
+  max-width: 100% !important;
+}
+.o_dialog .ct_assign_wizard .o_list_view table {
+  table-layout: auto !important;
+  width: 100% !important;
+}
+.o_dialog .ct_assign_wizard .o_list_view td { vertical-align: top; }
+
+/* Make the textarea use all remaining width of the grid */
+.o_dialog .ct_assign_wizard textarea[data-name="codes_input"],
+.o_dialog .ct_assign_wizard textarea[name="codes_input"] {
+  width: 100% !important;
+  min-width: 100% !important;
+  min-height: 30vh;
+}

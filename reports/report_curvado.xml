@@ -1,0 +1,106 @@
+<odoo>
+    <data>
+        <record id="action_report_curvado" model="ir.actions.report">
+            <field name="name">Hoja de Producción de Curvados</field>
+            <field name="model">mrp.master.order</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">alterben_mrp_master_order.report_curvado</field>
+            <field name="print_report_name">'Curvado - ' + (doc.name or '')</field>
+        </record>
+
+        <template id="report_curvado">
+            <t t-call="web.basic_layout">
+                <div class="page" style="margin-top:0; padding-top:0;">
+                    <h2 style="text-align:center">HOJA DE PRODUCCIÓN DE CURVADOS</h2>
+                    
+                    <div>
+                        <strong>FECHA DE IMPRESIÓN:</strong>
+                        <span t-esc="now_str"/>
+                        <span style="display:inline-block; margin-left:24px;">
+                            <strong>RESPONSABLE:</strong> <span t-esc="username"/>
+                        </span>
+                    </div>
+                    <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-top:6px;">
+                        <div>
+                            <div><strong>ORDEN MAESTRA:</strong> <span t-esc="master and (master.name or '') or ''"/></div>
+                            <div><strong>HORNO/TURNO:</strong> <span t-esc="dict(hp_t1='HORNO PEQUEÑO - TURNO 1', hp_t2='HORNO PEQUEÑO - TURNO 2', hg_t1='HORNO GRANDE - TURNO 1', hg_t2='HORNO GRANDE - TURNO 2').get(tab, '')"/></div>
+                        </div>
+                    </div>
+                    <br/>
+                    <table class="table table-sm o_main_table" style="width:100%; font-size:11px;">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th style="width:18%">Pedido de origen</th>
+                                <th style="width:36%">Producto</th>
+                                <th>Código</th>
+                                <th style="text-align:right; width:10%">Programado hoy</th>
+                                <th style="text-align:right; width:10%">Arrastre</th>
+                                <th style="text-align:right; width:10%">Cantidad total</th>
+                                <th style="text-align:right; width:10%">Cantidad producida</th>
+                                <th style="text-align:right; width:10%">Desechados</th>
+                                <th>Observaciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-set="_i" t-value="0"/>
+                            <tr t-foreach="lines" t-as="l">
+                                <t t-set="_i" t-value="_i + 1"/>
+                                <td t-esc="_i"/>
+                                <td t-esc="l.pedido_original_id.name or ''"/>
+                                <td t-esc="l.product_id.display_name"/>
+                                <td t-esc="l.product_code or (l.product_id.default_code or '')"/>
+                                <td style="text-align:right" t-esc="'%.2f' % (l.product_qty or 0.0)"/>
+                                <td style="text-align:right" t-esc="'%.2f' % (l.arrastre_qty or 0.0)"/>
+                                <td style="text-align:right" t-esc="'%.2f' % (l.qty_total or 0.0)"/>
+                                <td style="text-align:right" t-esc="'%.2f' % (l.cantidad_real or 0.0)"/>
+                                <td style="text-align:right" t-esc="'%.2f' % (l.scrap_qty or 0.0)"/>
+                                <td t-esc="l.note or ''"/>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="4" style="text-align:right"><strong>TOTALES:</strong></td>
+                                <td style="text-align:right"><span t-esc="'%.2f' % total_program"/></td>
+                                <td style="text-align:right"><span t-esc="'%.2f' % total_arrastre"/></td>
+                                <td style="text-align:right"><span t-esc="'%.2f' % total_qty"/></td>
+                                <td style="text-align:right"><span t-esc="'%.2f' % total_produced"/></td>
+                                <td style="text-align:right"><span t-esc="'%.2f' % total_scrap"/></td>
+                                <td></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                    <br/>
+                    <div>
+                        <strong>NOTAS ADICIONALES:</strong>
+                        <div t-esc="notes" style="min-height:40px; border:1px solid #ccc; padding:6px"/>
+                    </div>
+                    <br/>
+                    <div>
+                        <strong>TIPO DE FALLA (referencia):</strong>
+                        <ol>
+                            <li>Vidrio resbalado</li>
+                            <li>Vidrio roto (bisagra)</li>
+                            <li>Roto en carga de vidrio</li>
+                            <li>Problemas del horno</li>
+                            <li>Vidrio pasado</li>
+                            <li>Vidrio pegado (descarga)</li>
+                            <li>Vidrio mal curvado</li>
+                        </ol>
+                    </div>
+
+                    <t t-if="tab in ('hp_t1', 'hp_t2')">
+                        <div style="margin-top:8mm; text-align:right; font-size:12px; font-weight:bold;">
+                            RPRO 04-07/01
+                        </div>
+                    </t>
+                    <t t-if="tab in ('hg_t1', 'hg_t2')">
+                        <div style="margin-top:8mm; text-align:right; font-size:12px; font-weight:bold;">
+                            RPRO 04-08/01
+                        </div>
+                    </t>
+                </div>
+            </t>
+        </template>
+    </data>
+</odoo>

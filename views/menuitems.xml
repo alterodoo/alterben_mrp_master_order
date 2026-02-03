@@ -1,0 +1,13 @@
+
+<odoo>
+    <menuitem id="menu_mrp_master_root" name="Órdenes Maestras" parent="mrp.menu_mrp_root" sequence="60" groups="mrp.group_mrp_user,base.group_system"/>
+    <menuitem id="menu_mrp_master_orders" name="Órdenes Maestras" parent="menu_mrp_master_root" sequence="10" action="alterben_mrp_master_order.action_mrp_master_order" groups="mrp.group_mrp_user" active="0"/>
+    <menuitem id="menu_mrp_master_orders_curvado" name="Órdenes Curvado/PVB" parent="menu_mrp_master_root" sequence="11" action="alterben_mrp_master_order.action_mrp_master_order_curvado" groups="mrp.group_mrp_user"/>
+    <menuitem id="menu_mrp_master_orders_opt" name="Órdenes Producto Terminado (OPT)" parent="menu_mrp_master_root" sequence="12" action="alterben_mrp_master_order.action_mrp_master_order_opt" groups="mrp.group_mrp_user"/>
+    <menuitem id="menu_mrp_pedido_original" name="Pedidos existentes" parent="menu_mrp_master_root" sequence="15" action="alterben_mrp_master_order.action_mrp_pedido_original" groups="mrp.group_mrp_user"/>
+    <menuitem id="menu_mrp_master_types" name="Parámetros de Órdenes Maestras" parent="menu_mrp_master_root" sequence="20" action="alterben_mrp_master_order.action_mrp_master_type" groups="mrp.group_mrp_manager,base.group_system"/>
+    <menuitem id="menu_mrp_import_wizard" name="Importar Ordenes con Desechos" parent="menu_mrp_master_root" sequence="30" action="alterben_mrp_master_order.action_mrp_import_wizard" groups="mrp.group_mrp_user"/>
+    <menuitem id="menu_mrp_import_structural_wizard" name="Importacion de Estructural" parent="menu_mrp_master_root" sequence="31" action="alterben_mrp_master_order.action_mrp_import_structural_wizard" groups="mrp.group_mrp_user,base.group_system" active="1"/>
+    <menuitem id="menu_control_total_root" name="Control Total" parent="stock.menu_stock_warehouse_mgmt" sequence="90"/>
+    <menuitem id="menu_control_total_labels" name="Etiquetas" parent="menu_control_total_root" action="alterben_mrp_master_order.action_control_total_label"/>
+</odoo>

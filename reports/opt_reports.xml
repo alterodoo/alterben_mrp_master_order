@@ -1,0 +1,368 @@
+﻿<odoo>
+  <data>
+    <record id="action_report_production_daily_pdf" model="ir.actions.report">
+      <field name="name">Produccion diaria</field>
+      <field name="model">mrp.report.production.daily</field>
+      <field name="report_type">qweb-pdf</field>
+      <field name="report_name">alterben_mrp_master_order.report_production_daily</field>
+      <field name="print_report_name">'Produccion diaria - ' + (object.report_date and object.report_date.strftime('%Y-%m-%d') or '')</field>
+    </record>
+
+    <record id="action_report_in_process_pdf" model="ir.actions.report">
+      <field name="name">Productos en proceso</field>
+      <field name="model">mrp.report.in_process</field>
+      <field name="report_type">qweb-pdf</field>
+      <field name="report_name">alterben_mrp_master_order.report_in_process</field>
+      <field name="print_report_name">'Productos en proceso - ' + (object.report_date and object.report_date.strftime('%Y-%m-%d') or '')</field>
+    </record>
+
+    <record id="action_report_raw_materials_pdf" model="ir.actions.report">
+      <field name="name">Materias primas</field>
+      <field name="model">mrp.report.raw_materials</field>
+      <field name="report_type">qweb-pdf</field>
+      <field name="report_name">alterben_mrp_master_order.report_raw_materials</field>
+      <field name="print_report_name">'Materias primas - ' + (object.report_date and object.report_date.strftime('%Y-%m-%d') or '')</field>
+    </record>
+
+    <record id="action_report_sales_no_stock_pdf" model="ir.actions.report">
+      <field name="name">Ventas sin stock</field>
+      <field name="model">mrp.report.sales_no_stock</field>
+      <field name="report_type">qweb-pdf</field>
+      <field name="report_name">alterben_mrp_master_order.report_sales_no_stock</field>
+      <field name="print_report_name">'Ventas sin stock - ' + (object.report_date and object.report_date.strftime('%Y-%m-%d') or '')</field>
+    </record>
+
+    <template id="report_production_daily">
+      <t t-call="web.basic_layout">
+        <div class="page">
+          <style>
+            .pd-table { font-family: "Arial Narrow", "Liberation Sans Narrow", "Roboto Condensed", Arial, sans-serif; font-size: 12pt; }
+            .pd-table th, .pd-table td { padding: 2px 4px; }
+            .pd-title { font-family: "Arial Narrow", "Liberation Sans Narrow", "Roboto Condensed", Arial, sans-serif; font-size: 18pt; }
+            .pd-meta { font-family: "Arial Narrow", "Liberation Sans Narrow", "Roboto Condensed", Arial, sans-serif; font-size: 13pt; }
+          </style>
+          <t t-set="doc_header" t-value="docs and docs[0] or None"/>
+          <t t-if="doc_header">
+            <h2 class="pd-title">
+              <t t-esc="'Produccion diaria: ' + ('Sugerida' if (doc_header.report_type or 'suggested') == 'suggested' else 'General')"/>
+            </h2>
+          </t>
+          <t t-foreach="docs" t-as="doc">
+            <p class="pd-meta"><strong>Fecha:</strong> <span t-esc="doc.report_date"/></p>
+            <p>
+              <strong>Total pequeñas:</strong> <span t-esc="len(doc.line_ids.filtered(lambda l: l.size_category == 'small'))"/>
+              <span style="display:inline-block; margin-left:18px;">
+                <strong>Total grandes:</strong> <span t-esc="len(doc.line_ids.filtered(lambda l: l.size_category == 'large'))"/>
+              </span>
+            </p>
+            <t t-set="sum_max_qty" t-value="sum(doc.line_ids.mapped('max_qty'))"/>
+            <t t-set="sum_min_qty" t-value="sum(doc.line_ids.mapped('min_qty'))"/>
+            <t t-set="sum_stock_qty" t-value="sum(doc.line_ids.mapped('stock_qty'))"/>
+            <t t-set="sum_sales_qty" t-value="sum(doc.line_ids.mapped('sales_qty'))"/>
+            <t t-set="sum_priority_sales_qty" t-value="sum(doc.line_ids.mapped('priority_sales_qty'))"/>
+            <t t-set="sum_in_process_qty" t-value="sum(doc.line_ids.mapped('in_process_qty'))"/>
+            <t t-set="sum_molds_qty" t-value="sum(doc.line_ids.mapped('molds_qty'))"/>
+            <t t-set="sum_produce_qty" t-value="sum(doc.line_ids.mapped('produce_qty'))"/>
+            <t t-set="sum_required_qty" t-value="sum(doc.line_ids.mapped('required_qty'))"/>
+            <table class="table table-sm o_main_table pd-table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Tam.</th>
+                  <th>Codigo</th>
+                  <th>Producto</th>
+                  <th>Max</th>
+                  <th>Min</th>
+                  <th>Stock</th>
+                  <th>Ped.</th>
+                  <th>Prior.</th>
+                  <th>Proc.</th>
+                  <th>Mol.</th>
+                  <th>Prod.</th>
+                  <th>Req.</th>
+                </tr>
+              </thead>
+              <tbody>
+                <t t-set="_i" t-value="0"/>
+                <tr t-foreach="doc.line_ids" t-as="l">
+                  <t t-set="_i" t-value="_i + 1"/>
+                  <td t-esc="_i"/>
+                  <td t-esc="'P' if l.size_category == 'small' else ('G' if l.size_category == 'large' else '')"/>
+                  <td t-esc="('-'.join((l.product_code or '').split('-')[1:]) or (l.product_code or ''))"/>
+                  <td t-esc="l.product_name"/>
+                  <td t-esc="'%.0f' % (l.max_qty or 0.0)"/>
+                  <td t-esc="'%.0f' % (l.min_qty or 0.0)"/>
+                  <td t-esc="'%.0f' % (l.stock_qty or 0.0)"/>
+                  <td t-esc="'%.0f' % (l.sales_qty or 0.0)"/>
+                  <td t-esc="'%.0f' % (l.priority_sales_qty or 0.0)"/>
+                  <td t-esc="'%.0f' % (l.in_process_qty or 0.0)"/>
+                  <td t-esc="'%.0f' % (l.molds_qty or 0.0)"/>
+                  <td t-esc="'%.0f' % (l.produce_qty or 0.0)"/>
+                  <td t-esc="'%.0f' % (l.required_qty or 0.0)"/>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td colspan="4"><strong>TOTAL</strong></td>
+                  <td><strong t-esc="'%.0f' % (sum_max_qty or 0.0)"/></td>
+                  <td><strong t-esc="'%.0f' % (sum_min_qty or 0.0)"/></td>
+                  <td><strong t-esc="'%.0f' % (sum_stock_qty or 0.0)"/></td>
+                  <td><strong t-esc="'%.0f' % (sum_sales_qty or 0.0)"/></td>
+                  <td><strong t-esc="'%.0f' % (sum_priority_sales_qty or 0.0)"/></td>
+                  <td><strong t-esc="'%.0f' % (sum_in_process_qty or 0.0)"/></td>
+                  <td><strong t-esc="'%.0f' % (sum_molds_qty or 0.0)"/></td>
+                  <td><strong t-esc="'%.0f' % (sum_produce_qty or 0.0)"/></td>
+                  <td><strong t-esc="'%.0f' % (sum_required_qty or 0.0)"/></td>
+                </tr>
+              </tfoot>
+            </table>
+          </t>
+        </div>
+      </t>
+    </template>
+
+    <template id="report_in_process">
+      <t t-call="web.basic_layout">
+        <div class="page">
+          <h2>Productos en proceso</h2>
+          <t t-foreach="docs" t-as="doc">
+            <p><strong>Fecha:</strong> <span t-esc="doc.report_date"/></p>
+            <t t-set="sum_stock_qty" t-value="sum(doc.line_ids.mapped('stock_qty'))"/>
+            <t t-set="sum_qty_s1" t-value="sum(doc.line_ids.mapped('qty_s1'))"/>
+            <t t-set="sum_qty_s2" t-value="sum(doc.line_ids.mapped('qty_s2'))"/>
+            <t t-set="sum_qty_s3" t-value="sum(doc.line_ids.mapped('qty_s3'))"/>
+            <t t-set="sum_qty_pt" t-value="sum(doc.line_ids.mapped('qty_pt'))"/>
+            <t t-set="sum_qty_total" t-value="sum(doc.line_ids.mapped('qty_total'))"/>
+            <t t-if="doc.show_valued">
+              <t t-set="sum_cost_s1" t-value="sum(doc.line_ids.mapped('cost_s1_total'))"/>
+              <t t-set="sum_cost_s2" t-value="sum(doc.line_ids.mapped('cost_s2_total'))"/>
+              <t t-set="sum_cost_s3" t-value="sum(doc.line_ids.mapped('cost_s3_total'))"/>
+              <t t-set="sum_cost_pt" t-value="sum(doc.line_ids.mapped('cost_pt_total'))"/>
+              <t t-set="sum_cost_total" t-value="sum(doc.line_ids.mapped('cost_total'))"/>
+            </t>
+            <table class="table table-sm o_main_table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Referencia</th>
+                  <th>Producto</th>
+                  <th>Existencia</th>
+                  <th>S1</th>
+                  <t t-if="doc.show_valued">
+                    <th>S1 $Unit</th>
+                    <th>S1 $Total</th>
+                  </t>
+                  <th>S2</th>
+                  <t t-if="doc.show_valued">
+                    <th>S2 $Unit</th>
+                    <th>S2 $Total</th>
+                  </t>
+                  <th>S3</th>
+                  <t t-if="doc.show_valued">
+                    <th>S3 $Unit</th>
+                    <th>S3 $Total</th>
+                  </t>
+                  <th>PT</th>
+                  <t t-if="doc.show_valued">
+                    <th>PT $Unit</th>
+                    <th>PT $Total</th>
+                  </t>
+                  <th>Total</th>
+                  <t t-if="doc.show_valued">
+                    <th>Total $</th>
+                  </t>
+                </tr>
+              </thead>
+              <tbody>
+                <t t-set="_i" t-value="0"/>
+                <tr t-foreach="doc.line_ids" t-as="l">
+                  <t t-set="_i" t-value="_i + 1"/>
+                  <td t-esc="_i"/>
+                  <td t-esc="l.product_code"/>
+                  <td t-esc="l.product_name"/>
+                  <td t-esc="'%.0f' % (l.stock_qty or 0.0)"/>
+                  <td t-esc="'%.0f' % (l.qty_s1 or 0.0)"/>
+                  <t t-if="doc.show_valued">
+                    <td t-esc="'%.2f' % (l.cost_unit or 0.0)"/>
+                    <td t-esc="'%.2f' % (l.cost_s1_total or 0.0)"/>
+                  </t>
+                  <td t-esc="'%.0f' % (l.qty_s2 or 0.0)"/>
+                  <t t-if="doc.show_valued">
+                    <td t-esc="'%.2f' % (l.cost_unit or 0.0)"/>
+                    <td t-esc="'%.2f' % (l.cost_s2_total or 0.0)"/>
+                  </t>
+                  <td t-esc="'%.0f' % (l.qty_s3 or 0.0)"/>
+                  <t t-if="doc.show_valued">
+                    <td t-esc="'%.2f' % (l.cost_unit or 0.0)"/>
+                    <td t-esc="'%.2f' % (l.cost_s3_total or 0.0)"/>
+                  </t>
+                  <td t-esc="'%.0f' % (l.qty_pt or 0.0)"/>
+                  <t t-if="doc.show_valued">
+                    <td t-esc="'%.2f' % (l.cost_unit or 0.0)"/>
+                    <td t-esc="'%.2f' % (l.cost_pt_total or 0.0)"/>
+                  </t>
+                  <td t-esc="'%.0f' % (l.qty_total or 0.0)"/>
+                  <t t-if="doc.show_valued">
+                    <td t-esc="'%.2f' % (l.cost_total or 0.0)"/>
+                  </t>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td colspan="3"><strong>TOTAL</strong></td>
+                  <td><strong t-esc="'%.0f' % (sum_stock_qty or 0.0)"/></td>
+                  <td><strong t-esc="'%.0f' % (sum_qty_s1 or 0.0)"/></td>
+                  <t t-if="doc.show_valued">
+                    <td></td>
+                    <td><strong t-esc="'%.2f' % (sum_cost_s1 or 0.0)"/></td>
+                  </t>
+                  <td><strong t-esc="'%.0f' % (sum_qty_s2 or 0.0)"/></td>
+                  <t t-if="doc.show_valued">
+                    <td></td>
+                    <td><strong t-esc="'%.2f' % (sum_cost_s2 or 0.0)"/></td>
+                  </t>
+                  <td><strong t-esc="'%.0f' % (sum_qty_s3 or 0.0)"/></td>
+                  <t t-if="doc.show_valued">
+                    <td></td>
+                    <td><strong t-esc="'%.2f' % (sum_cost_s3 or 0.0)"/></td>
+                  </t>
+                  <td><strong t-esc="'%.0f' % (sum_qty_pt or 0.0)"/></td>
+                  <t t-if="doc.show_valued">
+                    <td></td>
+                    <td><strong t-esc="'%.2f' % (sum_cost_pt or 0.0)"/></td>
+                  </t>
+                  <td><strong t-esc="'%.0f' % (sum_qty_total or 0.0)"/></td>
+                  <t t-if="doc.show_valued">
+                    <td><strong t-esc="'%.2f' % (sum_cost_total or 0.0)"/></td>
+                  </t>
+                </tr>
+              </tfoot>
+            </table>
+          </t>
+        </div>
+      </t>
+    </template>
+
+    <template id="report_raw_materials">
+      <t t-call="web.basic_layout">
+        <div class="page">
+          <style>
+            .rm-table { font-family: "Arial Narrow", "Liberation Sans Narrow", "Roboto Condensed", Arial, sans-serif; font-size: 7pt; }
+            .rm-table th, .rm-table td { padding: 2px 4px; }
+            .rm-title { font-family: "Arial Narrow", "Liberation Sans Narrow", "Roboto Condensed", Arial, sans-serif; font-size: 11pt; }
+          </style>
+          <h2 class="rm-title">Reporte de materia prima</h2>
+          <t t-foreach="docs" t-as="doc">
+            <p><strong>Fecha:</strong> <span t-esc="doc.report_date"/></p>
+            <t t-set="sum_required_qty" t-value="sum(doc.line_ids.mapped('required_qty'))"/>
+            <t t-set="sum_min_qty" t-value="sum(doc.line_ids.mapped('min_qty'))"/>
+            <t t-set="sum_max_qty" t-value="sum(doc.line_ids.mapped('max_qty'))"/>
+            <t t-set="sum_stock_mp_qty" t-value="sum(doc.line_ids.mapped('stock_mp_qty'))"/>
+            <t t-set="sum_stock_pre_qty" t-value="sum(doc.line_ids.mapped('stock_pre_qty'))"/>
+            <t t-set="sum_in_process_qty" t-value="sum(doc.line_ids.mapped('in_process_qty'))"/>
+            <table class="table table-sm o_main_table rm-table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Referencia</th>
+                  <th>Producto</th>
+                  <th>UdM</th>
+                  <th>Min</th>
+                  <th>Max</th>
+                  <th>Requerido</th>
+                  <th>Stock MP</th>
+                  <th>Stock Preprod</th>
+                  <th>En proceso</th>
+                </tr>
+              </thead>
+              <tbody>
+                <t t-set="_i" t-value="0"/>
+                <tr t-foreach="doc.line_ids" t-as="l">
+                  <t t-set="_i" t-value="_i + 1"/>
+                  <td t-esc="_i"/>
+                  <td t-esc="l.product_code"/>
+                  <td t-esc="l.product_name"/>
+                  <td t-esc="l.uom_id.name or ''"/>
+                  <td t-esc="'%.0f' % (l.min_qty or 0.0)"/>
+                  <td t-esc="'%.0f' % (l.max_qty or 0.0)"/>
+                  <td t-esc="'%.0f' % (l.required_qty or 0.0)"/>
+                  <td t-esc="'%.0f' % (l.stock_mp_qty or 0.0)"/>
+                  <td t-esc="'%.0f' % (l.stock_pre_qty or 0.0)"/>
+                  <td t-esc="'%.0f' % (l.in_process_qty or 0.0)"/>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td colspan="4"><strong>TOTAL</strong></td>
+                  <td><strong t-esc="'%.0f' % (sum_min_qty or 0.0)"/></td>
+                  <td><strong t-esc="'%.0f' % (sum_max_qty or 0.0)"/></td>
+                  <td><strong t-esc="'%.0f' % (sum_required_qty or 0.0)"/></td>
+                  <td><strong t-esc="'%.0f' % (sum_stock_mp_qty or 0.0)"/></td>
+                  <td><strong t-esc="'%.0f' % (sum_stock_pre_qty or 0.0)"/></td>
+                  <td><strong t-esc="'%.0f' % (sum_in_process_qty or 0.0)"/></td>
+                </tr>
+              </tfoot>
+            </table>
+          </t>
+        </div>
+      </t>
+    </template>
+
+    <template id="report_sales_no_stock">
+      <t t-call="web.basic_layout">
+        <div class="page">
+          <h2>Ventas sin stock</h2>
+          <t t-foreach="docs" t-as="doc">
+            <p><strong>Fecha:</strong> <span t-esc="doc.report_date"/></p>
+            <t t-set="sum_stock_qty" t-value="sum(doc.line_ids.mapped('stock_qty'))"/>
+            <t t-set="sum_sales_qty" t-value="sum(doc.line_ids.mapped('sales_qty'))"/>
+            <t t-set="sum_priority_sales_qty" t-value="sum(doc.line_ids.mapped('priority_sales_qty'))"/>
+            <t t-set="sum_in_process_qty" t-value="sum(doc.line_ids.mapped('in_process_qty'))"/>
+            <t t-set="sum_shortfall_qty" t-value="sum(doc.line_ids.mapped('shortfall_qty'))"/>
+            <table class="table table-sm o_main_table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Referencia</th>
+                  <th>Producto</th>
+                  <th>UdM</th>
+                  <th>Existencia</th>
+                  <th>Ventas</th>
+                  <th>Prioridad</th>
+                  <th>En proceso</th>
+                  <th>Faltante</th>
+                </tr>
+              </thead>
+              <tbody>
+                <t t-set="_i" t-value="0"/>
+                <tr t-foreach="doc.line_ids" t-as="l">
+                  <t t-set="_i" t-value="_i + 1"/>
+                  <td t-esc="_i"/>
+                  <td t-esc="l.product_code"/>
+                  <td t-esc="l.product_name"/>
+                  <td t-esc="l.uom_id.name or ''"/>
+                  <td t-esc="'%.0f' % (l.stock_qty or 0.0)"/>
+                  <td t-esc="'%.0f' % (l.sales_qty or 0.0)"/>
+                  <td t-esc="'%.0f' % (l.priority_sales_qty or 0.0)"/>
+                  <td t-esc="'%.0f' % (l.in_process_qty or 0.0)"/>
+                  <td t-esc="'%.0f' % (l.shortfall_qty or 0.0)"/>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td colspan="4"><strong>TOTAL</strong></td>
+                  <td><strong t-esc="'%.0f' % (sum_stock_qty or 0.0)"/></td>
+                  <td><strong t-esc="'%.0f' % (sum_sales_qty or 0.0)"/></td>
+                  <td><strong t-esc="'%.0f' % (sum_priority_sales_qty or 0.0)"/></td>
+                  <td><strong t-esc="'%.0f' % (sum_in_process_qty or 0.0)"/></td>
+                  <td><strong t-esc="'%.0f' % (sum_shortfall_qty or 0.0)"/></td>
+                </tr>
+              </tfoot>
+            </table>
+          </t>
+        </div>
+      </t>
+    </template>
+  </data>
+</odoo>
+

@@ -1,0 +1,599 @@
+
+<odoo>
+    <record id="access_mrp_master_type_user" model="ir.model.access">
+        <field name="name">access_mrp_master_type_user</field>
+        <field name="model_id" ref="model_mrp_master_type"/>
+        <field name="group_id" ref="mrp.group_mrp_user"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+    <record id="access_mrp_master_type_manager" model="ir.model.access">
+        <field name="name">access_mrp_master_type_manager</field>
+        <field name="model_id" ref="model_mrp_master_type"/>
+        <field name="group_id" ref="mrp.group_mrp_manager"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+    <record id="access_mrp_master_order_user" model="ir.model.access">
+        <field name="name">access_mrp_master_order_user</field>
+        <field name="model_id" ref="model_mrp_master_order"/>
+        <field name="group_id" ref="mrp.group_mrp_user"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+    <record id="access_mrp_master_order_manager" model="ir.model.access">
+        <field name="name">access_mrp_master_order_manager</field>
+        <field name="model_id" ref="model_mrp_master_order"/>
+        <field name="group_id" ref="mrp.group_mrp_manager"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+    <record id="access_mrp_master_order_line_user" model="ir.model.access">
+        <field name="name">access_mrp_master_order_line_user</field>
+        <field name="model_id" ref="model_mrp_master_order_line"/>
+        <field name="group_id" ref="mrp.group_mrp_user"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+    <record id="access_mrp_master_order_line_manager" model="ir.model.access">
+        <field name="name">access_mrp_master_order_line_manager</field>
+        <field name="model_id" ref="model_mrp_master_order_line"/>
+        <field name="group_id" ref="mrp.group_mrp_manager"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+    <record id="access_mrp_pedido_original_user" model="ir.model.access">
+        <field name="name">access_mrp_pedido_original_user</field>
+        <field name="model_id" ref="model_mrp_pedido_original"/>
+        <field name="group_id" ref="mrp.group_mrp_user"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="0"/>
+    </record>
+    <record id="access_mrp_pedido_original_manager" model="ir.model.access">
+        <field name="name">access_mrp_pedido_original_manager</field>
+        <field name="model_id" ref="model_mrp_pedido_original"/>
+        <field name="group_id" ref="mrp.group_mrp_manager"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+
+    <!-- Access for print wizard -->
+    <record id="access_mrp_master_print_wizard_user" model="ir.model.access">
+        <field name="name">access_mrp_master_print_wizard_user</field>
+        <field name="model_id" ref="model_mrp_master_print_wizard"/>
+        <field name="group_id" ref="mrp.group_mrp_user"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+    <record id="access_mrp_master_print_wizard_manager" model="ir.model.access">
+        <field name="name">access_mrp_master_print_wizard_manager</field>
+        <field name="model_id" ref="model_mrp_master_print_wizard"/>
+        <field name="group_id" ref="mrp.group_mrp_manager"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+    <record id="access_mrp_master_print_wizard_manager" model="ir.model.access">
+        <field name="name">access_mrp_master_print_wizard_manager</field>
+        <field name="model_id" ref="model_mrp_master_print_wizard"/>
+        <field name="group_id" ref="mrp.group_mrp_manager"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+    <record id="access_mrp_master_print_wizard_settings" model="ir.model.access">
+        <field name="name">access_mrp_master_print_wizard_settings</field>
+        <field name="model_id" ref="model_mrp_master_print_wizard"/>
+        <field name="group_id" ref="base.group_system"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+    <record id="access_mrp_master_confirm_wizard_user" model="ir.model.access">
+        <field name="name">access_mrp_master_confirm_wizard_user</field>
+        <field name="model_id" ref="model_mrp_master_confirm_wizard"/>
+        <field name="group_id" ref="mrp.group_mrp_user"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+    <!-- Access for Add Open MO Wizard -->
+    <record id="access_mrp_add_open_mo_wizard_mrp_user_xml" model="ir.model.access">
+        <field name="name">access_mrp_add_open_mo_wizard_mrp_user_xml</field>
+        <field name="model_id" ref="model_mrp_add_open_mo_wizard"/>
+        <field name="group_id" ref="mrp.group_mrp_user"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+    <record id="access_mrp_add_open_mo_wizard_mrp_manager_xml" model="ir.model.access">
+        <field name="name">access_mrp_add_open_mo_wizard_mrp_manager_xml</field>
+        <field name="model_id" ref="model_mrp_add_open_mo_wizard"/>
+        <field name="group_id" ref="mrp.group_mrp_manager"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+    <record id="access_mrp_add_open_mo_wizard_system_xml" model="ir.model.access">
+        <field name="name">access_mrp_add_open_mo_wizard_system_xml</field>
+        <field name="model_id" ref="model_mrp_add_open_mo_wizard"/>
+        <field name="group_id" ref="base.group_system"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+    <record id="access_mrp_master_confirm_wizard_manager" model="ir.model.access">
+        <field name="name">access_mrp_master_confirm_wizard_manager</field>
+        <field name="model_id" ref="model_mrp_master_confirm_wizard"/>
+        <field name="group_id" ref="mrp.group_mrp_manager"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+    <record id="access_mrp_master_confirm_wizard_settings" model="ir.model.access">
+        <field name="name">access_mrp_master_confirm_wizard_settings</field>
+        <field name="model_id" ref="model_mrp_master_confirm_wizard"/>
+        <field name="group_id" ref="base.group_system"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+
+    <record id="access_receta_pvb_user" model="ir.model.access">
+        <field name="name">access_receta_pvb_user</field>
+        <field name="model_id" ref="model_receta_pvb"/>
+        <field name="group_id" ref="base.group_user"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+
+    <record id="access_receta_pvb_cabina_move_user" model="ir.model.access">
+        <field name="name">access_receta_pvb_cabina_move_user</field>
+        <field name="model_id" ref="model_receta_pvb_cabina_move"/>
+        <field name="group_id" ref="base.group_user"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="0"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="0"/>
+    </record>
+
+    <record id="access_pvb_cabina_inv_wizard_user" model="ir.model.access">
+        <field name="name">access_pvb_cabina_inv_wizard_user</field>
+        <field name="model_id" ref="model_pvb_cabina_inv_wizard"/>
+        <field name="group_id" ref="base.group_user"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+
+    <record id="access_pvb_cabina_inv_wizard_line_user" model="ir.model.access">
+        <field name="name">access_pvb_cabina_inv_wizard_line_user</field>
+        <field name="model_id" ref="model_pvb_cabina_inv_wizard_line"/>
+        <field name="group_id" ref="base.group_user"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+    <record id="access_receta_pvb_manager" model="ir.model.access">
+        <field name="name">access_receta_pvb_manager</field>
+        <field name="model_id" ref="model_receta_pvb"/>
+        <field name="group_id" ref="mrp.group_mrp_manager"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+
+    <record id="access_receta_pvb_cabina_move_manager" model="ir.model.access">
+        <field name="name">access_receta_pvb_cabina_move_manager</field>
+        <field name="model_id" ref="model_receta_pvb_cabina_move"/>
+        <field name="group_id" ref="mrp.group_mrp_manager"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="0"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="0"/>
+    </record>
+
+    <record id="access_pvb_cabina_inv_wizard_manager" model="ir.model.access">
+        <field name="name">access_pvb_cabina_inv_wizard_manager</field>
+        <field name="model_id" ref="model_pvb_cabina_inv_wizard"/>
+        <field name="group_id" ref="mrp.group_mrp_manager"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+
+    <record id="access_pvb_cabina_inv_wizard_line_manager" model="ir.model.access">
+        <field name="name">access_pvb_cabina_inv_wizard_line_manager</field>
+        <field name="model_id" ref="model_pvb_cabina_inv_wizard_line"/>
+        <field name="group_id" ref="mrp.group_mrp_manager"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+    <record id="access_mrp_workorder_produce_wizard" model="ir.model.access">
+        <field name="name">access_mrp_workorder_produce_wizard</field>
+        <field name="model_id" ref="model_mrp_workorder_produce_wizard"/>
+        <field name="group_id" ref="mrp.group_mrp_user"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+
+    <!-- Access for MO import wizard (merged from alterben_mrp_import_mo_with_scrap) -->
+    <record id="access_mrp_import_wizard_mrp_user" model="ir.model.access">
+        <field name="name">access_mrp_import_wizard_mrp_user</field>
+        <field name="model_id" ref="model_mrp_import_wizard"/>
+        <field name="group_id" ref="mrp.group_mrp_user"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+    <record id="access_mrp_import_wizard_mrp_manager" model="ir.model.access">
+        <field name="name">access_mrp_import_wizard_mrp_manager</field>
+        <field name="model_id" ref="model_mrp_import_wizard"/>
+        <field name="group_id" ref="mrp.group_mrp_manager"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+    <record id="access_mrp_import_wizard_system" model="ir.model.access">
+        <field name="name">access_mrp_import_wizard_system</field>
+        <field name="model_id" ref="model_mrp_import_wizard"/>
+        <field name="group_id" ref="base.group_system"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+    <record id="access_mrp_import_result_wizard_mrp_user" model="ir.model.access">
+        <field name="name">access_mrp_import_result_wizard_mrp_user</field>
+        <field name="model_id" ref="model_mrp_import_result_wizard"/>
+        <field name="group_id" ref="mrp.group_mrp_user"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+    <record id="access_mrp_import_result_wizard_mrp_manager" model="ir.model.access">
+        <field name="name">access_mrp_import_result_wizard_mrp_manager</field>
+        <field name="model_id" ref="model_mrp_import_result_wizard"/>
+        <field name="group_id" ref="mrp.group_mrp_manager"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+    <record id="access_mrp_import_result_wizard_system" model="ir.model.access">
+        <field name="name">access_mrp_import_result_wizard_system</field>
+        <field name="model_id" ref="model_mrp_import_result_wizard"/>
+        <field name="group_id" ref="base.group_system"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+
+    <!-- Access for Structural Import Wizard (match import with scrap permissions) -->
+    <record id="access_mrp_import_structural_wizard_mrp_user_xml" model="ir.model.access">
+        <field name="name">access_mrp_import_structural_wizard_mrp_user_xml</field>
+        <field name="model_id" ref="model_mrp_import_structural_wizard"/>
+        <field name="group_id" ref="mrp.group_mrp_user"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+    <record id="access_mrp_import_structural_wizard_mrp_manager_xml" model="ir.model.access">
+        <field name="name">access_mrp_import_structural_wizard_mrp_manager_xml</field>
+        <field name="model_id" ref="model_mrp_import_structural_wizard"/>
+        <field name="group_id" ref="mrp.group_mrp_manager"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+    <record id="access_mrp_import_structural_wizard_system_xml" model="ir.model.access">
+        <field name="name">access_mrp_import_structural_wizard_system_xml</field>
+        <field name="model_id" ref="model_mrp_import_structural_wizard"/>
+        <field name="group_id" ref="base.group_system"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+
+    <!-- Access for Daily/Other Reports (match import with scrap permissions) -->
+    <record id="access_mrp_report_production_daily_mrp_user_xml" model="ir.model.access">
+        <field name="name">access_mrp_report_production_daily_mrp_user_xml</field>
+        <field name="model_id" ref="model_mrp_report_production_daily"/>
+        <field name="group_id" ref="mrp.group_mrp_user"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+    <record id="access_mrp_report_production_daily_mrp_manager_xml" model="ir.model.access">
+        <field name="name">access_mrp_report_production_daily_mrp_manager_xml</field>
+        <field name="model_id" ref="model_mrp_report_production_daily"/>
+        <field name="group_id" ref="mrp.group_mrp_manager"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+    <record id="access_mrp_report_production_daily_system_xml" model="ir.model.access">
+        <field name="name">access_mrp_report_production_daily_system_xml</field>
+        <field name="model_id" ref="model_mrp_report_production_daily"/>
+        <field name="group_id" ref="base.group_system"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+    <record id="access_mrp_report_production_daily_line_mrp_user_xml" model="ir.model.access">
+        <field name="name">access_mrp_report_production_daily_line_mrp_user_xml</field>
+        <field name="model_id" ref="model_mrp_report_production_daily_line"/>
+        <field name="group_id" ref="mrp.group_mrp_user"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+    <record id="access_mrp_report_production_daily_line_mrp_manager_xml" model="ir.model.access">
+        <field name="name">access_mrp_report_production_daily_line_mrp_manager_xml</field>
+        <field name="model_id" ref="model_mrp_report_production_daily_line"/>
+        <field name="group_id" ref="mrp.group_mrp_manager"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+    <record id="access_mrp_report_production_daily_line_system_xml" model="ir.model.access">
+        <field name="name">access_mrp_report_production_daily_line_system_xml</field>
+        <field name="model_id" ref="model_mrp_report_production_daily_line"/>
+        <field name="group_id" ref="base.group_system"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+
+    <record id="access_mrp_report_in_process_mrp_user_xml" model="ir.model.access">
+        <field name="name">access_mrp_report_in_process_mrp_user_xml</field>
+        <field name="model_id" ref="model_mrp_report_in_process"/>
+        <field name="group_id" ref="mrp.group_mrp_user"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+    <record id="access_mrp_report_in_process_mrp_manager_xml" model="ir.model.access">
+        <field name="name">access_mrp_report_in_process_mrp_manager_xml</field>
+        <field name="model_id" ref="model_mrp_report_in_process"/>
+        <field name="group_id" ref="mrp.group_mrp_manager"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+    <record id="access_mrp_report_in_process_system_xml" model="ir.model.access">
+        <field name="name">access_mrp_report_in_process_system_xml</field>
+        <field name="model_id" ref="model_mrp_report_in_process"/>
+        <field name="group_id" ref="base.group_system"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+    <record id="access_mrp_report_in_process_line_mrp_user_xml" model="ir.model.access">
+        <field name="name">access_mrp_report_in_process_line_mrp_user_xml</field>
+        <field name="model_id" ref="model_mrp_report_in_process_line"/>
+        <field name="group_id" ref="mrp.group_mrp_user"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+    <record id="access_mrp_report_in_process_line_mrp_manager_xml" model="ir.model.access">
+        <field name="name">access_mrp_report_in_process_line_mrp_manager_xml</field>
+        <field name="model_id" ref="model_mrp_report_in_process_line"/>
+        <field name="group_id" ref="mrp.group_mrp_manager"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+    <record id="access_mrp_report_in_process_line_system_xml" model="ir.model.access">
+        <field name="name">access_mrp_report_in_process_line_system_xml</field>
+        <field name="model_id" ref="model_mrp_report_in_process_line"/>
+        <field name="group_id" ref="base.group_system"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+
+    <record id="access_mrp_report_raw_materials_mrp_user_xml" model="ir.model.access">
+        <field name="name">access_mrp_report_raw_materials_mrp_user_xml</field>
+        <field name="model_id" ref="model_mrp_report_raw_materials"/>
+        <field name="group_id" ref="mrp.group_mrp_user"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+    <record id="access_mrp_report_raw_materials_mrp_manager_xml" model="ir.model.access">
+        <field name="name">access_mrp_report_raw_materials_mrp_manager_xml</field>
+        <field name="model_id" ref="model_mrp_report_raw_materials"/>
+        <field name="group_id" ref="mrp.group_mrp_manager"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+    <record id="access_mrp_report_raw_materials_system_xml" model="ir.model.access">
+        <field name="name">access_mrp_report_raw_materials_system_xml</field>
+        <field name="model_id" ref="model_mrp_report_raw_materials"/>
+        <field name="group_id" ref="base.group_system"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+    <record id="access_mrp_report_raw_materials_line_mrp_user_xml" model="ir.model.access">
+        <field name="name">access_mrp_report_raw_materials_line_mrp_user_xml</field>
+        <field name="model_id" ref="model_mrp_report_raw_materials_line"/>
+        <field name="group_id" ref="mrp.group_mrp_user"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+    <record id="access_mrp_report_raw_materials_line_mrp_manager_xml" model="ir.model.access">
+        <field name="name">access_mrp_report_raw_materials_line_mrp_manager_xml</field>
+        <field name="model_id" ref="model_mrp_report_raw_materials_line"/>
+        <field name="group_id" ref="mrp.group_mrp_manager"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+    <record id="access_mrp_report_raw_materials_line_system_xml" model="ir.model.access">
+        <field name="name">access_mrp_report_raw_materials_line_system_xml</field>
+        <field name="model_id" ref="model_mrp_report_raw_materials_line"/>
+        <field name="group_id" ref="base.group_system"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+
+    <record id="access_mrp_report_sales_no_stock_mrp_user_xml" model="ir.model.access">
+        <field name="name">access_mrp_report_sales_no_stock_mrp_user_xml</field>
+        <field name="model_id" ref="model_mrp_report_sales_no_stock"/>
+        <field name="group_id" ref="mrp.group_mrp_user"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+    <record id="access_mrp_report_sales_no_stock_mrp_manager_xml" model="ir.model.access">
+        <field name="name">access_mrp_report_sales_no_stock_mrp_manager_xml</field>
+        <field name="model_id" ref="model_mrp_report_sales_no_stock"/>
+        <field name="group_id" ref="mrp.group_mrp_manager"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+    <record id="access_mrp_report_sales_no_stock_system_xml" model="ir.model.access">
+        <field name="name">access_mrp_report_sales_no_stock_system_xml</field>
+        <field name="model_id" ref="model_mrp_report_sales_no_stock"/>
+        <field name="group_id" ref="base.group_system"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+    <record id="access_mrp_report_sales_no_stock_line_mrp_user_xml" model="ir.model.access">
+        <field name="name">access_mrp_report_sales_no_stock_line_mrp_user_xml</field>
+        <field name="model_id" ref="model_mrp_report_sales_no_stock_line"/>
+        <field name="group_id" ref="mrp.group_mrp_user"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+    <record id="access_mrp_report_sales_no_stock_line_mrp_manager_xml" model="ir.model.access">
+        <field name="name">access_mrp_report_sales_no_stock_line_mrp_manager_xml</field>
+        <field name="model_id" ref="model_mrp_report_sales_no_stock_line"/>
+        <field name="group_id" ref="mrp.group_mrp_manager"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+    <record id="access_mrp_report_sales_no_stock_line_system_xml" model="ir.model.access">
+        <field name="name">access_mrp_report_sales_no_stock_line_system_xml</field>
+        <field name="model_id" ref="model_mrp_report_sales_no_stock_line"/>
+        <field name="group_id" ref="base.group_system"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+
+    <record id="access_mrp_opt_labels_wizard_user_xml" model="ir.model.access">
+        <field name="name">access_mrp_opt_labels_wizard_user_xml</field>
+        <field name="model_id" ref="model_mrp_opt_labels_wizard"/>
+        <field name="group_id" ref="base.group_user"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+    <record id="access_mrp_opt_labels_wizard_mrp_user_xml" model="ir.model.access">
+        <field name="name">access_mrp_opt_labels_wizard_mrp_user_xml</field>
+        <field name="model_id" ref="model_mrp_opt_labels_wizard"/>
+        <field name="group_id" ref="mrp.group_mrp_user"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+    <record id="access_mrp_opt_labels_wizard_mrp_manager_xml" model="ir.model.access">
+        <field name="name">access_mrp_opt_labels_wizard_mrp_manager_xml</field>
+        <field name="model_id" ref="model_mrp_opt_labels_wizard"/>
+        <field name="group_id" ref="mrp.group_mrp_manager"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+    <record id="access_mrp_opt_labels_wizard_system_xml" model="ir.model.access">
+        <field name="name">access_mrp_opt_labels_wizard_system_xml</field>
+        <field name="model_id" ref="model_mrp_opt_labels_wizard"/>
+        <field name="group_id" ref="base.group_system"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+</odoo>

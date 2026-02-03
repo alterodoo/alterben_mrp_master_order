@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <record id="view_add_open_mo_wizard_form" model="ir.ui.view">
+    <field name="name">mrp.add.open.mo.wizard.form</field>
+    <field name="model">mrp.add.open.mo.wizard</field>
+    <field name="arch" type="xml">
+      <form string="Agregar MOs abiertas">
+        <group>
+          <field name="master_id" invisible="1"/>
+          <field name="tab" invisible="1"/>
+          <field name="production_ids" domain="[('state','not in',('done','cancel')),('product_id.categ_id','child_of', context.get('allowed_categ_ids', []))]">
+            <tree>
+              <field name="name" string="MO"/>
+              <field name="product_id"/>
+              <field name="origin"/>
+              <field name="create_date" string="Fecha de generacion"/>
+              <field name="product_qty"/>
+              <field name="state"/>
+            </tree>
+          </field>
+        </group>
+        <footer>
+          <button name="action_apply" type="object" string="Agregar" class="btn-primary"/>
+          <button string="Cancelar" class="btn-secondary" special="cancel"/>
+        </footer>
+      </form>
+    </field>
+  </record>
+
+  <record id="action_add_open_mo_wizard" model="ir.actions.act_window">
+    <field name="name">Agregar MOs abiertas</field>
+    <field name="res_model">mrp.add.open.mo.wizard</field>
+    <field name="view_mode">form</field>
+    <field name="target">new</field>
+  </record>
+</odoo>

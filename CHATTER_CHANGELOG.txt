@@ -1,0 +1,1 @@
+Added chatter to mrp.master.order form view. No other changes.

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <record id="mrp_production_workorder_tree_novedades_button" model="ir.ui.view">
+    <field name="name">mrp.production.work.order.tree.novedades.button</field>
+    <field name="model">mrp.workorder</field>
+    <field name="inherit_id" ref="mrp.mrp_production_workorder_tree_view"/>
+    <field name="arch" type="xml">
+      <xpath expr="//tree" position="inside">
+        <field name="id" invisible="1" class="ab-wo-id"/><button string="0" name="action_open_novedades_summary" type="object"
+                class="btn-secondary ab-nov-count" context="{'_ab_wo_id': id}"/>
+        <button name="action_open_novedades_wizard" type="object" string="Novedades" class="btn-primary"/>
+      </xpath>
+    </field>
+  </record>
+
+  <!-- Mostrar cantidades y acceso directo a registrar producción desde la lista de OTs -->
+  <!-- Mostrar cantidades OPT desde la lista de OTs -->
+  <record id="mrp_production_workorder_tree_production_shortcuts" model="ir.ui.view">
+    <field name="name">mrp.production.work.order.tree.production.shortcuts</field>
+    <field name="model">mrp.workorder</field>
+    <field name="inherit_id" ref="mrp.mrp_production_workorder_tree_view"/>
+    <field name="arch" type="xml">
+      <xpath expr="//tree" position="attributes">
+        <attribute name="editable">bottom</attribute>
+      </xpath>
+      <xpath expr="//tree" position="inside">
+        <field name="can_edit_opt_ensamblado" invisible="1" column_invisible="1"/>
+        <field name="can_edit_opt_prevaciado" invisible="1" column_invisible="1"/>
+        <field name="can_edit_opt_inspeccion" invisible="1" column_invisible="1"/>
+        <field name="opt_qty_ensamblar" string="Cant. Ens" optional="show"/>
+        <field name="opt_qty_prevaciar" string="Cant. Prev." optional="show"/>
+        <field name="opt_qty_liberar" string="Cant. Lib" optional="show"/>
+        <field name="is_pvb_corte" invisible="1" column_invisible="1"/>
+        <field name="pvb_cortado_qty_wo" optional="show"
+               column_invisible="not is_pvb_corte"/>
+        <field name="pvb_corte_note" optional="show"
+               column_invisible="not is_pvb_corte"/>
+      </xpath>
+    </field>
+  </record>
+
+</odoo>

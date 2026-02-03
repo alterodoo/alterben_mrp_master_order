@@ -1,0 +1,27 @@
+<odoo>
+  <record id="view_stock_return_picking_form_inherit_mass_select" model="ir.ui.view">
+    <field name="name">stock.return.picking.form.mass.select</field>
+    <field name="model">stock.return.picking</field>
+    <field name="inherit_id" ref="stock.view_stock_return_picking_form"/>
+    <field name="arch" type="xml">
+      <xpath expr="//field[@name='product_return_moves']" position="before">
+        <div class="oe_button_box" name="button_box_return_lines">
+          <button name="action_select_all" type="object" string="Seleccionar todo" class="btn-secondary" style="margin-right:6px;"/>
+          <button name="action_unselect_all" type="object" string="Deseleccionar todo" class="btn-secondary" style="margin-right:6px;"/>
+          <button name="action_delete_selected" type="object" string="Eliminar seleccionados" class="btn-secondary" style="margin-right:6px;"/>
+          <button name="action_keep_only_selected" type="object" string="Dejar solo seleccionados" class="btn-secondary"/>
+        </div>
+      </xpath>
+
+      <xpath expr="//field[@name='product_return_moves']/tree/field[@name='product_id']" position="before">
+        <field name="x_selected" string="Sel." widget="boolean_toggle"/>
+      </xpath>
+
+      <xpath expr="//field[@name='product_return_moves']" position="after">
+        <group>
+          <field name="x_total_qty_selected" readonly="1" string="TOTAL A DEVOLVER (seleccionados):"/>
+        </group>
+      </xpath>
+    </field>
+  </record>
+</odoo>

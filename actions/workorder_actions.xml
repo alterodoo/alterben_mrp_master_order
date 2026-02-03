@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <record id="alterben_action_open_novedades" model="ir.actions.server">
+    <field name="name">Novedades (WO)</field>
+    <field name="model_id" ref="mrp.model_mrp_workorder"/>
+    <field name="binding_model_id" ref="mrp.model_mrp_workorder"/>
+    <field name="binding_view_types">form,tree,kanban</field>
+    <field name="state">code</field>
+    <field name="code">action = records.action_open_novedades_wizard()</field>
+  </record>
+</odoo>
