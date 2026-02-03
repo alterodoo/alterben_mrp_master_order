@@ -1,4 +1,0 @@
-<odoo>
-  <menuitem id="menu_control_total_root" name="Control Total" parent="stock.menu_stock_warehouse_mgmt" sequence="90"/>
-  <menuitem id="menu_control_total_labels" name="Etiquetas" parent="menu_control_total_root" action="alterben_mrp_master_order.action_control_total_label"/>
-</odoo>

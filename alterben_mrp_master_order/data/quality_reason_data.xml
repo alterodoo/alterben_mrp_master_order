@@ -1,5 +1,0 @@
-<odoo>
-    <record id="quality_reason_producto_con_falla_inspeccion_final" model="quality.reason">
-        <field name="name">PRODUCTO CON FALLA (INSPECCION FINAL)</field>
-    </record>
-</odoo>
