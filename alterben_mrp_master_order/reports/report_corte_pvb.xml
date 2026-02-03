@@ -1,0 +1,164 @@
+<odoo>
+    <data>
+        <record id="action_report_corte_pvb" model="ir.actions.report">
+            <field name="name">Orden de Corte PVB</field>
+            <field name="model">mrp.master.order</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">alterben_mrp_master_order.report_corte_pvb</field>
+            <field name="print_report_name">'Corte PVB - ' + (doc.name or '')</field>
+        </record>
+
+        <template id="report_corte_pvb" t-name="alterben_mrp_master_order.report_corte_pvb">
+            <t t-call="web.basic_layout">
+                <div class="page corte_pvb_report" style="margin-top:0; padding-top:0; margin-left:5mm; margin-right:5mm;">
+                    <h2 style="text-align:center">ORDEN DE CORTE PVB</h2>
+
+                    <div>
+                        <strong>FECHA DE IMPRESIÓN:</strong>
+                        <span t-esc="now_str"/>
+                        <span style="display:inline-block; margin-left:24px;">
+                            <strong>RESPONSABLE:</strong> <span t-esc="username"/>
+                        </span>
+                    </div>
+                    <div>
+                        <strong>ORDEN MAESTRA:</strong>
+                        <span t-esc="master and (master.name or '') or ''"/>
+                        <span style="display:inline-block; margin-left:24px;">
+                            <strong>TOTAL DE ITEMS:</strong>
+                            <span t-esc="line_count"/>
+                        </span>
+                    </div>
+
+                    <br/>
+
+                    <style type="text/css">
+                        .corte_pvb_report .corte-pvb-table {
+                            width: 100%;
+                            font-size: 15px;
+                            line-height: 1.2;
+                            font-family: "Roboto Condensed", "Arial Narrow",
+                                         "Liberation Sans Narrow", "Nimbus Sans Narrow",
+                                         Arial, sans-serif;
+                            font-stretch: condensed;
+                            table-layout: fixed;
+                        }
+
+                        .corte_pvb_report .corte-pvb-table tbody td {
+                            white-space: nowrap;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                            padding-top: 3px;
+                            padding-bottom: 3px;
+                        }
+
+                        .corte_pvb_report .corte-pvb-table thead th {
+                            font-size: 15px;
+                            font-weight: 700;
+                            white-space: normal;
+                            overflow: visible;
+                            text-overflow: clip;
+                            word-break: break-word;
+                            overflow-wrap: anywhere;
+                            hyphens: auto;
+                            padding-top: 4px;
+                            padding-bottom: 4px;
+                            line-height: 1.15;
+                        }
+
+                        /* Notas adicionales */
+                        .corte_pvb_report .notas-adicionales {
+                            margin-top: 12px;
+                            font-size: 15px; /* más grande */
+                            display: flex;
+                            align-items: flex-end;
+                            gap: 8px;
+                        }
+                        .corte_pvb_report .notas-linea {
+                            flex: 1;
+                            border-bottom: 1px solid #000;
+                            height: 18px;
+                        }
+                    </style>
+
+                    <table class="table table-sm o_main_table corte-pvb-table">
+                        <thead>
+                            <tr>
+                                <th style="width:4%;">#</th>
+                                <th style="width:8%;">Tipo PVB</th>
+                                <th style="width:6%;">Ancho</th>
+                                <th style="width:6%;">Long.</th>
+                                <th style="width:6%;">Cant. piezas</th>
+                                <th style="text-align:right; width:5%;">Cant.</th>
+                                <th style="width:7%;">Código</th>
+                                <th style="width:7%;">SR</th>
+                                <th style="width:33%;">Producto</th>
+                                <th style="width:6%;">Espes. (mm)</th>
+                                <th style="width:6%;">Color</th>
+                                <th style="width:8%;">Código Rollo</th>
+                                <th style="width:10%;">Notas</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <t t-set="_i" t-value="0"/>
+                            <tr t-foreach="lines" t-as="l">
+                                <t t-set="_i" t-value="_i + 1"/>
+                                <td t-esc="_i"/>
+                                <t t-set="cant_piezas"
+                                   t-value="l.cantidad_piezas or (1.0 if (l.product_qty == 1)
+                                            else ((l.product_qty or 0.0) / 2.0
+                                            if (l.product_qty or 0.0) &gt;= 2 else 0.0))"/>
+
+                                <td t-esc="l.tipo_pvb or ''"/>
+                                <td t-esc="l.ancho_pvb or ''"/>
+                                <td t-esc="int(l.longitud_calc or 0)"/>
+                                <td t-esc="('%.1f' % (cant_piezas or 0.0)).replace('.', ',')"/>
+                                <td style="text-align:right" t-esc="'%.0f' % (l.product_qty or 0.0)"/>
+                                <td t-esc="l.product_code or (l.product_id.default_code or '')"/>
+                                <td t-esc="l.ficha_pvb or ''"/>
+                                <td t-esc="l.product_id.display_name"/>
+                                <td t-esc="l.espesor_pvb or ''"/>
+                                <td t-esc="l.color_pvb or ''"/>
+                                <td t-esc="l.codigo_rollo or ''"/>
+                                <td t-esc="l.note or ''"/>
+                            </tr>
+                        </tbody>
+
+                        <tfoot>
+                            <tr>
+                                <td colspan="4" style="text-align:right">
+                                    <strong>TOTALES:</strong>
+                                </td>
+                                <td style="text-align:right">
+                                    <span t-esc="('%.1f' % (total_cant_piezas or 0.0)).replace('.', ',')"/>
+                                </td>
+                                <td style="text-align:right">
+                                    <span t-esc="'%.0f' % (total_program or 0.0)"/>
+                                </td>
+                                <td colspan="7"/>
+                            </tr>
+                        </tfoot>
+                    </table>
+
+                    <!-- Firma -->
+                    <div style="margin-top:10px; width:45%;">
+                        <strong>RESPONSABLE:</strong>
+                        <div style="margin-top:25px; border-top:1px solid #000; text-align:center;">
+                            Firma / Nombre
+                        </div>
+                    </div>
+
+                    <!-- Notas adicionales -->
+                    <div class="notas-adicionales">
+                        <strong>Notas adicionales:</strong>
+                        <div class="notas-linea"></div>
+                    </div>
+
+                    <div style="margin-top:8mm; text-align:right; font-size:12px; font-weight:bold;">
+                        RPRO 04-10/01
+                    </div>
+                </div>
+            </t>
+        </template>
+    </data>
+</odoo>

@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Stock Scrap Form View -->
+    <record id="view_stock_scrap_form_inherit_quality" model="ir.ui.view">
+        <field name="name">stock.scrap.form.inherit.quality</field>
+        <field name="model">stock.scrap</field>
+        <field name="inherit_id" ref="stock.stock_scrap_form_view2"/>
+        <field name="arch" type="xml">
+            <!-- Campo de texto para mostrar la alerta generada, anclado al campo de producto -->
+            <xpath expr="//form//field[@name='product_id'][1]" position="after">
+                <field name="quality_alert_display" readonly="1" string="Alerta generada"/>
+                <field name="import_stock_status" readonly="1"/>
+                <field name="auto_validate_failed" readonly="1"/>
+                <field name="auto_validate_message" readonly="1" invisible="not auto_validate_failed"/>
+            </xpath>
+        </field>
+    </record>
+    
+    <!-- Stock Scrap Tree View -->
+    <record id="view_stock_scrap_tree_inherit_quality" model="ir.ui.view">
+        <field name="name">stock.scrap.tree.inherit.quality</field>
+        <field name="model">stock.scrap</field>
+        <field name="inherit_id" ref="stock.stock_scrap_tree_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='product_id']" position="after">
+                <field name="quality_alert_display" optional="show" string="Alerta generada"/>
+                <field name="import_stock_status" optional="show"/>
+                <field name="auto_validate_failed" optional="show"/>
+                <field name="auto_validate_message" optional="hide"/>
+            </xpath>
+        </field>
+    </record>
+    
+    <!-- Action to open scrap from quality alert -->
+    <record id="action_stock_scrap_from_quality_alert" model="ir.actions.act_window">
+        <field name="name">Desecho</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">stock.scrap</field>
+        <field name="view_mode">form</field>
+        <field name="target">current</field>
+        <field name="context">{'default_quality_alert_id': active_id}</field>
+    </record>
+    
+    <!-- Server action to create scrap from quality alert -->
+    <record id="server_action_create_scrap_from_alert" model="ir.actions.server">
+        <field name="name">Crear Desecho</field>
+        <field name="model_id" ref="model_quality_alert"/>
+        <field name="binding_model_id" ref="quality.model_quality_alert"/>
+        <field name="binding_view_types">form</field>
+        <field name="state">code</field>
+        <field name="code">
+            if records:
+                action = records[0].action_create_scrap()
+        </field>
+    </record>
+</odoo>

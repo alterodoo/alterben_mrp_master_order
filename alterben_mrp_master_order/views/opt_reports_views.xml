@@ -1,0 +1,400 @@
+﻿<odoo>
+  <data>
+    <!-- Produccion diaria -->
+    <record id="view_report_production_daily_form" model="ir.ui.view">
+      <field name="name">mrp.report.production.daily.form</field>
+      <field name="model">mrp.report.production.daily</field>
+      <field name="arch" type="xml">
+        <form string="Reporte diario de produccion">
+          <header>
+            <button name="action_generate" type="object" string="Generar reporte" class="btn-primary"/>
+            <button name="action_open_lines" type="object" string="Ver lista" class="btn-secondary"/>
+            <button name="action_print" type="object" string="Imprimir" class="btn-secondary"/>
+            <button name="action_open_report_params" type="object" string="Ver parametros" class="btn-secondary"/>
+          </header>
+          <sheet>
+            <div class="o_row">
+              <div class="o_col-4">
+                <group>
+                  <field name="report_date"/>
+                  <field name="report_type"/>
+                  <field name="size_filter"/>
+                </group>
+              </div>
+              <div class="o_col-4">
+                <group>
+                  <field name="turns_small"/>
+                  <field name="hours_per_turn_small"/>
+                  <field name="turns_large"/>
+                  <field name="hours_per_turn_large"/>
+                  <field name="max_mold_changes_small"/>
+                  <field name="max_mold_changes_large"/>
+                </group>
+              </div>
+              <div class="o_col-4">
+                <group>
+                  <field name="total_small_count" readonly="1" string="Total pequenas marcas"/>
+                  <field name="total_small_produce" readonly="1" string="Total pequenas producir"/>
+                  <field name="total_small_required" readonly="1" string="Total pequenas requerido"/>
+                  <field name="total_large_count" readonly="1" string="Total grandes marcas"/>
+                  <field name="total_large_produce" readonly="1" string="Total grandes producir"/>
+                  <field name="total_large_required" readonly="1" string="Total grandes requerido"/>
+                </group>
+              </div>
+            </div>
+            <field name="line_ids">
+              <tree editable="bottom" create="true" decoration-danger="is_excess" limit="80">
+                <field name="row_number" string="#" readonly="1" width="40"/>
+                <field name="is_excess" invisible="1" column_invisible="1"/>
+                <field name="size_category"/>
+                <field name="available_product_ids" invisible="1" column_invisible="1"/>
+                <field name="product_code" string="Codigo"/>
+                <field name="product_name" string="Producto"/>
+                <field name="max_qty" sum="Total"/>
+                <field name="min_qty" sum="Total"/>
+                <field name="stock_qty" sum="Total"/>
+                <field name="sales_qty" sum="Total"/>
+                <field name="priority_sales_qty" sum="Total"/>
+                <field name="in_process_qty" sum="Total"/>
+                <field name="molds_qty" sum="Total"/>
+                <field name="produce_qty" sum="Total" class="text-primary o_text_bold"/>
+                <field name="required_qty" sum="Total"/>
+              </tree>
+            </field>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <record id="view_report_production_daily_line_tree" model="ir.ui.view">
+      <field name="name">mrp.report.production.daily.line.tree</field>
+      <field name="model">mrp.report.production.daily.line</field>
+      <field name="arch" type="xml">
+        <tree decoration-danger="is_excess" limit="80">
+          <field name="row_number" string="#" readonly="1" width="40"/>
+          <field name="is_excess" invisible="1" column_invisible="1"/>
+          <field name="size_category"/>
+          <field name="product_code" string="Codigo"/>
+          <field name="product_name" string="Producto"/>
+          <field name="max_qty" sum="Total"/>
+          <field name="min_qty" sum="Total"/>
+          <field name="stock_qty" sum="Total"/>
+          <field name="sales_qty" sum="Total"/>
+          <field name="priority_sales_qty" sum="Total"/>
+          <field name="in_process_qty" sum="Total"/>
+          <field name="molds_qty" sum="Total"/>
+          <field name="produce_qty" sum="Total" class="text-primary o_text_bold"/>
+          <field name="required_qty" sum="Total"/>
+        </tree>
+      </field>
+    </record>
+
+    <record id="action_report_production_daily" model="ir.actions.act_window">
+      <field name="name">Reporte diario de produccion</field>
+      <field name="res_model">mrp.report.production.daily</field>
+      <field name="view_mode">form</field>
+      <field name="view_id" ref="view_report_production_daily_form"/>
+      <field name="target">current</field>
+    </record>
+
+
+    <!-- Productos en proceso -->
+    <record id="view_report_in_process_form" model="ir.ui.view">
+      <field name="name">mrp.report.in.process.form</field>
+      <field name="model">mrp.report.in_process</field>
+      <field name="arch" type="xml">
+        <form string="Productos en proceso">
+          <header>
+            <button name="action_generate" type="object" string="Generar reporte" class="btn-primary"/>
+            <button name="action_open_lines" type="object" string="Ver lista" class="btn-secondary"/>
+            <button name="action_print" type="object" string="Imprimir" class="btn-secondary"/>
+          </header>
+          <sheet>
+            <div class="o_row">
+              <div class="o_col-6">
+                <group>
+                  <group>
+                    <field name="report_date"/>
+                    <field name="show_valued"/>
+                    <field name="size_filter" invisible="1"/>
+                    <field name="turns_small" invisible="1"/>
+                    <field name="hours_per_turn_small" invisible="1"/>
+                  </group>
+                  <group>
+                    <field name="turns_large" invisible="1"/>
+                    <field name="hours_per_turn_large" invisible="1"/>
+                  </group>
+                </group>
+              </div>
+            </div>
+              <field name="line_ids" context="{'show_valued': show_valued}">
+                <tree editable="bottom" create="false" limit="80">
+                  <field name="wizard_id" invisible="1" column_invisible="1"/>
+                  <field name="show_valued" invisible="1" column_invisible="1"/>
+                  <field name="row_number" string="#" readonly="1" width="40"/>
+                  <field name="size_category" optional="hide"/>
+                  <field name="product_code"/>
+                  <field name="product_name"/>
+                  <field name="stock_qty" sum="Total"/>
+                  <field name="qty_s1" sum="Total"/>
+                  <field name="cost_unit" string="S1 $Unit" column_invisible="not context.get('show_valued')"/>
+                  <field name="cost_s1_total" string="S1 $Total" column_invisible="not context.get('show_valued')"/>
+                  <field name="qty_s2" sum="Total"/>
+                  <field name="cost_unit" string="S2 $Unit" column_invisible="not context.get('show_valued')"/>
+                  <field name="cost_s2_total" string="S2 $Total" column_invisible="not context.get('show_valued')"/>
+                  <field name="qty_s3" sum="Total"/>
+                  <field name="cost_unit" string="S3 $Unit" column_invisible="not context.get('show_valued')"/>
+                  <field name="cost_s3_total" string="S3 $Total" column_invisible="not context.get('show_valued')"/>
+                  <field name="qty_pt" sum="Total"/>
+                  <field name="cost_unit" string="PT $Unit" column_invisible="not context.get('show_valued')"/>
+                  <field name="cost_pt_total" string="PT $Total" column_invisible="not context.get('show_valued')"/>
+                  <field name="qty_total" sum="Total"/>
+                  <field name="cost_total" string="Total $" column_invisible="not context.get('show_valued')"/>
+                </tree>
+              </field>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <record id="view_report_in_process_line_tree" model="ir.ui.view">
+      <field name="name">mrp.report.in.process.line.tree</field>
+      <field name="model">mrp.report.in_process.line</field>
+      <field name="arch" type="xml">
+        <tree limit="80">
+          <field name="wizard_id" invisible="1" column_invisible="1"/>
+          <field name="show_valued" invisible="1" column_invisible="1"/>
+          <field name="row_number" string="#" readonly="1" width="40"/>
+          <field name="size_category" optional="hide"/>
+          <field name="product_code"/>
+          <field name="product_name"/>
+          <field name="stock_qty" sum="Total"/>
+          <field name="qty_s1" sum="Total"/>
+          <field name="cost_unit" string="S1 $Unit" column_invisible="not context.get('show_valued')"/>
+          <field name="cost_s1_total" string="S1 $Total" column_invisible="not context.get('show_valued')"/>
+          <field name="qty_s2" sum="Total"/>
+          <field name="cost_unit" string="S2 $Unit" column_invisible="not context.get('show_valued')"/>
+          <field name="cost_s2_total" string="S2 $Total" column_invisible="not context.get('show_valued')"/>
+          <field name="qty_s3" sum="Total"/>
+          <field name="cost_unit" string="S3 $Unit" column_invisible="not context.get('show_valued')"/>
+          <field name="cost_s3_total" string="S3 $Total" column_invisible="not context.get('show_valued')"/>
+          <field name="qty_pt" sum="Total"/>
+          <field name="cost_unit" string="PT $Unit" column_invisible="not context.get('show_valued')"/>
+          <field name="cost_pt_total" string="PT $Total" column_invisible="not context.get('show_valued')"/>
+          <field name="qty_total" sum="Total"/>
+          <field name="cost_total" string="Total $" column_invisible="not context.get('show_valued')"/>
+        </tree>
+      </field>
+    </record>
+
+    <record id="action_report_in_process" model="ir.actions.act_window">
+      <field name="name">Productos en proceso</field>
+      <field name="res_model">mrp.report.in_process</field>
+      <field name="view_mode">form</field>
+      <field name="view_id" ref="view_report_in_process_form"/>
+      <field name="target">current</field>
+    </record>
+
+    <!-- Materias primas -->
+    <record id="view_report_raw_materials_form" model="ir.ui.view">
+      <field name="name">mrp.report.raw.materials.form</field>
+      <field name="model">mrp.report.raw_materials</field>
+      <field name="arch" type="xml">
+          <form string="Reporte de materia prima">
+          <header>
+            <button name="action_generate" type="object" string="Generar reporte" class="btn-primary"/>
+            <button name="action_open_lines" type="object" string="Ver lista" class="btn-secondary"/>
+            <button name="action_print" type="object" string="Imprimir" class="btn-secondary"/>
+          </header>
+          <sheet>
+            <div class="o_row">
+              <div class="o_col-6">
+                <group>
+                  <group>
+                    <field name="report_date"/>
+                    <field name="size_filter" invisible="1"/>
+                    <field name="turns_small" invisible="1"/>
+                    <field name="hours_per_turn_small" invisible="1"/>
+                  </group>
+                  <group>
+                    <field name="turns_large" invisible="1"/>
+                    <field name="hours_per_turn_large" invisible="1"/>
+                  </group>
+                </group>
+              </div>
+            </div>
+            <field name="line_ids">
+              <tree editable="bottom" create="false" decoration-danger="is_extra" limit="80">
+                <field name="is_extra" invisible="1"/>
+                <field name="row_number" string="#" readonly="1" width="40"/>
+                <field name="size_category" optional="hide"/>
+                  <field name="product_code"/>
+                  <field name="product_name"/>
+                  <field name="uom_id"/>
+                  <field name="min_qty" sum="Total"/>
+                  <field name="max_qty" sum="Total"/>
+                  <field name="required_qty" sum="Total"/>
+                  <field name="stock_mp_qty" sum="Total"/>
+                  <field name="stock_pre_qty" sum="Total"/>
+                  <field name="in_process_qty" sum="Total"/>
+              </tree>
+            </field>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+      <record id="view_report_raw_materials_line_tree" model="ir.ui.view">
+        <field name="name">mrp.report.raw.materials.line.tree</field>
+        <field name="model">mrp.report.raw_materials.line</field>
+        <field name="arch" type="xml">
+          <tree decoration-danger="is_extra" limit="80">
+            <field name="is_extra" invisible="1"/>
+            <field name="row_number" string="#" readonly="1" width="40"/>
+            <field name="size_category" optional="hide"/>
+            <field name="product_code"/>
+            <field name="product_name"/>
+            <field name="uom_id"/>
+            <field name="min_qty" sum="Total"/>
+            <field name="max_qty" sum="Total"/>
+            <field name="required_qty" sum="Total"/>
+            <field name="stock_mp_qty" sum="Total"/>
+            <field name="stock_pre_qty" sum="Total"/>
+            <field name="in_process_qty" sum="Total"/>
+        </tree>
+      </field>
+    </record>
+
+    <record id="action_report_raw_materials" model="ir.actions.act_window">
+      <field name="name">Reporte de materia prima</field>
+      <field name="res_model">mrp.report.raw_materials</field>
+      <field name="view_mode">form</field>
+      <field name="view_id" ref="view_report_raw_materials_form"/>
+      <field name="target">current</field>
+    </record>
+
+    <!-- Ventas sin stock -->
+    <record id="view_report_sales_no_stock_form" model="ir.ui.view">
+      <field name="name">mrp.report.sales.no.stock.form</field>
+      <field name="model">mrp.report.sales_no_stock</field>
+      <field name="arch" type="xml">
+        <form string="Ventas sin stock">
+          <header>
+            <button name="action_generate" type="object" string="Generar reporte" class="btn-primary"/>
+            <button name="action_open_lines" type="object" string="Ver lista" class="btn-secondary"/>
+            <button name="action_print" type="object" string="Imprimir" class="btn-secondary"/>
+          </header>
+            <sheet>
+              <div class="o_row">
+                <div class="o_col-6">
+                  <group>
+                    <field name="report_date"/>
+                    <field name="categ_id"/>
+                  </group>
+                </div>
+              </div>
+            <field name="line_ids">
+              <tree editable="bottom" create="false" limit="80">
+                <field name="row_number" string="#" readonly="1" width="40"/>
+                <field name="size_category" optional="hide"/>
+                <field name="product_code"/>
+                <field name="product_name"/>
+                <field name="uom_id"/>
+                <field name="stock_qty" sum="Total"/>
+                <field name="sales_qty" sum="Total"/>
+                <field name="priority_sales_qty" sum="Total"/>
+                <field name="in_process_qty" sum="Total"/>
+                <field name="shortfall_qty" sum="Total"/>
+              </tree>
+            </field>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <record id="view_report_sales_no_stock_line_tree" model="ir.ui.view">
+      <field name="name">mrp.report.sales.no.stock.line.tree</field>
+      <field name="model">mrp.report.sales_no_stock.line</field>
+      <field name="arch" type="xml">
+        <tree limit="80">
+          <field name="row_number" string="#" readonly="1" width="40"/>
+          <field name="size_category" optional="hide"/>
+          <field name="product_code"/>
+          <field name="product_name"/>
+          <field name="uom_id"/>
+          <field name="stock_qty" sum="Total"/>
+          <field name="sales_qty" sum="Total"/>
+          <field name="priority_sales_qty" sum="Total"/>
+          <field name="in_process_qty" sum="Total"/>
+          <field name="shortfall_qty" sum="Total"/>
+        </tree>
+      </field>
+    </record>
+
+    <record id="action_report_sales_no_stock" model="ir.actions.act_window">
+      <field name="name">Ventas sin stock</field>
+      <field name="res_model">mrp.report.sales_no_stock</field>
+      <field name="view_mode">form</field>
+      <field name="view_id" ref="view_report_sales_no_stock_form"/>
+      <field name="target">current</field>
+    </record>
+
+    <!-- Menus -->
+    <menuitem id="menu_mrp_master_reports" name="Reportes" parent="menu_mrp_master_root" sequence="30"/>
+    <menuitem id="menu_mrp_master_report_production_daily" name="Reporte diario de produccion" parent="menu_mrp_master_reports" sequence="10"
+              action="action_report_production_daily"/>
+    <menuitem id="menu_mrp_master_report_in_process" name="Productos en proceso" parent="menu_mrp_master_reports" sequence="20"
+              action="action_report_in_process"/>
+    <menuitem id="menu_mrp_master_report_raw_materials" name="Materias primas" parent="menu_mrp_master_reports" sequence="30"
+              action="action_report_raw_materials"/>
+    <menuitem id="menu_mrp_master_report_sales_no_stock" name="Ventas sin stock" parent="menu_mrp_master_reports" sequence="40"
+              action="action_report_sales_no_stock"/>
+
+    <!-- Asegurar visibilidad (limpiar grupos heredados en actualizaciones previas) -->
+    <record id="menu_mrp_master_reports" model="ir.ui.menu">
+      <field name="groups_id" eval="[(5, 0, 0)]"/>
+      <field name="active">1</field>
+    </record>
+    <record id="menu_mrp_master_report_production_daily" model="ir.ui.menu">
+      <field name="groups_id" eval="[(5, 0, 0)]"/>
+      <field name="active">1</field>
+    </record>
+    <record id="menu_mrp_master_report_in_process" model="ir.ui.menu">
+      <field name="groups_id" eval="[(5, 0, 0)]"/>
+      <field name="active">1</field>
+    </record>
+    <record id="menu_mrp_master_report_raw_materials" model="ir.ui.menu">
+      <field name="groups_id" eval="[(5, 0, 0)]"/>
+      <field name="active">1</field>
+    </record>
+    <record id="menu_mrp_master_report_sales_no_stock" model="ir.ui.menu">
+      <field name="groups_id" eval="[(5, 0, 0)]"/>
+      <field name="active">1</field>
+    </record>
+  </data>
+
+  <record id="view_mrp_report_params_wizard_form" model="ir.ui.view">
+    <field name="name">mrp.report.params.wizard.form</field>
+    <field name="model">mrp.report.params.wizard</field>
+    <field name="arch" type="xml">
+      <form string="Parametros de reportes">
+        <sheet>
+          <group>
+            <field name="report_sales_days"/>
+          </group>
+          <group string="Capacidad por turno">
+            <field name="rpt_units_small_8"/>
+            <field name="rpt_units_small_12"/>
+            <field name="rpt_units_large_8"/>
+            <field name="rpt_units_large_12"/>
+          </group>
+        </sheet>
+        <footer>
+          <button name="action_apply" type="object" string="Guardar" class="btn-primary"/>
+          <button string="Cancelar" special="cancel" class="btn-secondary"/>
+        </footer>
+      </form>
+    </field>
+  </record>
+</odoo>
+

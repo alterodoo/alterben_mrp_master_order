@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_mrp_pedido_original_tree" model="ir.ui.view">
+        <field name="name">mrp.pedido.original.tree</field>
+        <field name="model">mrp.pedido.original</field>
+        <field name="arch" type="xml">
+            <tree string="Pedidos existentes" editable="bottom" create="1" edit="1" delete="1">
+                <field name="name" string="Pedido de origen" required="1" readonly="0"/>
+                <field name="master_order_ids" string="Órdenes maestras" widget="many2many_tags" readonly="1" options="{'color_field': 'state'}"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_mrp_pedido_original_form" model="ir.ui.view">
+        <field name="name">mrp.pedido.original.form</field>
+        <field name="model">mrp.pedido.original</field>
+        <field name="arch" type="xml">
+            <form string="Pedido original">
+                <sheet class="o_form_sheet">
+                    <group>
+                        <field name="name" string="Pedido de origen" required="1" readonly="0"/>
+                        <field name="master_order_ids" string="Órdenes maestras" widget="many2many_tags" readonly="1" options="{'color_field': 'state'}"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_mrp_pedido_original" model="ir.actions.act_window">
+        <field name="name">Pedidos existentes</field>
+        <field name="res_model">mrp.pedido.original</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_mrp_pedido_original_tree"/>
+        <field name="help" type="html">
+            <p>Gestiona los pedidos originales generados desde las Ordenes Maestras.</p>
+        </field>
+    </record>
+</odoo>

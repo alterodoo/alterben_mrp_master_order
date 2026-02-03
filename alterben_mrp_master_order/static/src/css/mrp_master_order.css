@@ -1,0 +1,71 @@
+/* Pintar SOLO la celda 'cantidad_real' cuando la fila tenga decoration-warning */
+.o_list_view .o_data_row.o_list_record_warning td[data-name="cantidad_real"] {
+  background-color: #ffe4f1; /* rosado suave */
+}
+
+/* Ancho para la tabla de Corte PVB: se ajusta al contenedor y usa anchos fijos de columna */
+.o_form_view .o_field_widget[name="line_ids_corte"] .o_list_view .o_list_table {
+  table-layout: fixed;
+  width: 100%;
+}
+
+/* Expandir el formulario para ocupar todo el ancho (sin chatter a la derecha) */
+.o_form_view .o_form_sheet_bg {
+  max-width: none !important;
+  padding-left: 8px;
+  padding-right: 8px;
+}
+.o_form_view .o_form_sheet_bg > .o_form_sheet {
+  max-width: none !important;
+  width: 100% !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+/* Resaltar filas con ancho PVB distinto a la receta */
+.o_list_renderer .o_data_row.o_list_record_primary td {
+  color: #8b008b !important; /* morado oscuro */
+  font-weight: 700 !important;
+}
+.o_list_renderer .o_data_row.o_list_record_primary td[data-name="ancho_pvb"] {
+  color: #8b008b !important;
+  font-weight: 800 !important;
+}
+.o_list_renderer .o_data_row.o_list_record_bf td {
+  color: #8b008b !important;
+  font-weight: 700 !important;
+}
+.o_list_renderer .o_data_row.o_list_record_bf td[data-name="ancho_pvb"] {
+  color: #8b008b !important;
+  font-weight: 800 !important;
+}
+
+/* Anchos de columna para la rejilla de Corte de PVB */
+.corte_pvb_grid th[data-name='display_index'] { width: 3% !important; }
+.corte_pvb_grid th[data-name='product_code'] { width: 8% !important; }
+.corte_pvb_grid th[data-name='product_id'] { width: 22% !important; }
+.corte_pvb_grid th[data-name='product_qty'] { width: 5% !important; }
+.corte_pvb_grid th[data-name='production_id'] { width: 8% !important; }
+.corte_pvb_grid th[data-name='pedido_original_id'] { width: 10% !important; }
+.corte_pvb_grid th[data-name='espesor_pvb'] { width: 6% !important; }
+.corte_pvb_grid th[data-name='ancho_pvb'] { width: 6% !important; }
+.corte_pvb_grid th[data-name='tipo_pvb'] { width: 8% !important; }
+.corte_pvb_grid th[data-name='ficha_pvb'] { width: 4% !important; }
+.corte_pvb_grid th[data-name='note'] { width: 15% !important; }
+.corte_pvb_grid th[data-name='action_open_inv_wizard'] { width: 4% !important; }
+
+/* Botonera superior siempre visible para líneas de Orden Maestra */
+.ab-mrp-line-top-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 8px 0;
+}
+.ab-mrp-line-top-bar .ab-mrp-line-top-btn {
+  white-space: nowrap;
+}
+
+/* Ocultar botones del header del tree (se reemplazan por la botonera superior) */
+.o_list_view[data-res-model="mrp.master.order.line"] .o_list_buttons .ab-tree-header-btn {
+  display: none !important;
+}

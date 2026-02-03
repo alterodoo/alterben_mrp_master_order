@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_mrp_import_wizard_form" model="ir.ui.view">
+        <field name="name">mrp.import.wizard.form</field>
+        <field name="model">mrp.import.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Importar Órdenes de Fabricación con Desechos">
+                <group>
+                    <field name="file" filename="filename"/>
+                    <field name="filename" invisible="1"/>
+                </group>
+                <footer>
+                    <button string="Importar" type="object" name="action_import_mrp" class="btn-primary"/>
+                    <button string="Cancelar" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_mrp_import_wizard" model="ir.actions.act_window">
+        <field name="name">Importar Órdenes con Desechos</field>
+        <field name="res_model">mrp.import.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_mrp_import_wizard_form"/>
+        <field name="target">new</field>
+        <field name="binding_model_id" ref="mrp.model_mrp_production"/>
+        <field name="binding_view_types">list</field>
+    </record>
+
+    <!-- Menú dentro de Fabricación -->
+    <!-- Menu moved to views/menuitems.xml to avoid load-order issues -->
+</odoo>

@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Quality Alert Form View -->
+    <record id="view_quality_alert_form_inherit_scrap" model="ir.ui.view">
+        <field name="name">quality.alert.form.inherit.scrap</field>
+        <field name="model">quality.alert</field>
+        <field name="inherit_id" ref="quality_control.quality_alert_view_form"/>
+        <field name="arch" type="xml">
+            <!-- Campo de texto para mostrar el desecho generado, incrustado en el primer grupo -->
+            <xpath expr="//sheet//group[1]" position="inside">
+                <field name="scrap_display" string="Desecho generado" readonly="1"/>
+            </xpath>
+        </field>
+    </record>
+    
+    <!-- Quality Alert Tree View -->
+    <record id="view_quality_alert_tree_inherit_scrap" model="ir.ui.view">
+        <field name="name">quality.alert.tree.inherit.scrap</field>
+        <field name="model">quality.alert</field>
+        <field name="inherit_id" ref="quality.quality_alert_view_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="scrap_count" string="Desechos" widget="statinfo"/>
+            </xpath>
+        </field>
+    </record>
+    
+    <!-- Add Quality Alert to Manufacturing menu -->
+    <menuitem id="menu_mrp_quality_alert" 
+              name="Alertas de Calidad" 
+              parent="mrp.menu_mrp_root" 
+              action="quality_control.quality_alert_action_check"
+              sequence="30"/>
+</odoo>

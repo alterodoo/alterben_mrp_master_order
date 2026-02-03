@@ -1,0 +1,31 @@
+
+<odoo>
+  <!-- Add Etiquetas asignadas column per move in picking form -->
+  <record id="view_picking_form_ct_complete_move" model="ir.ui.view">
+    <field name="name">stock.picking.form.ct.complete.move</field>
+    <field name="model">stock.picking</field>
+    <field name="inherit_id" ref="stock.view_picking_form"/>
+    <field name="arch" type="xml">
+      <xpath expr="//field[@name='move_ids_without_package']/tree/field[last()]" position="after">
+        <field name="ct_complete_move" readonly="1"/>
+      </xpath>
+    </field>
+  </record>
+
+  <!-- Add Etiquetas asignadas boolean in picking header (optional, readonly) -->
+  <record id="view_picking_form_ct_complete_header" model="ir.ui.view">
+    <field name="name">stock.picking.form.ct.complete.header</field>
+    <field name="model">stock.picking</field>
+    <field name="inherit_id" ref="stock.view_picking_form"/>
+    <field name="arch" type="xml">
+      <xpath expr="//sheet" position="inside">
+        <field name="ct_banner_html" widget="html" nolabel="1"/>
+      </xpath>
+      <xpath expr="//sheet/notebook" position="before">
+        <group>
+          <field name="ct_complete_picking" readonly="1"/>
+        </group>
+      </xpath>
+    </field>
+  </record>
+</odoo>

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Regla para permitir acceso total a los administradores de almacén -->
+    <record id="control_total_label_rule_stock_manager" model="ir.rule">
+        <field name="name">Control Total Label - Stock Manager</field>
+        <field name="model_id" ref="model_control_total_label"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('stock.group_stock_manager'))]"/>
+    </record>
+
+    <!-- Regla para permitir acceso a usuarios de almacén -->
+    <record id="control_total_label_rule_stock_user" model="ir.rule">
+        <field name="name">Control Total Label - Stock User</field>
+        <field name="model_id" ref="model_control_total_label"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('stock.group_stock_user'))]"/>
+    </record>
+
+    <!-- Regla para permitir acceso a administradores de MRP -->
+    <record id="control_total_label_rule_mrp_manager" model="ir.rule">
+        <field name="name">Control Total Label - MRP Manager</field>
+        <field name="model_id" ref="model_control_total_label"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('mrp.group_mrp_manager'))]"/>
+    </record>
+
+    <!-- Regla para permitir acceso a usuarios de MRP -->
+    <record id="control_total_label_rule_mrp_user" model="ir.rule">
+        <field name="name">Control Total Label - MRP User</field>
+        <field name="model_id" ref="model_control_total_label"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('mrp.group_mrp_user'))]"/>
+    </record>
+
+    <!-- Reglas para el wizard de asignación de control total -->
+    <record id="assign_control_total_wizard_rule_stock_manager" model="ir.rule">
+        <field name="name">Assign Control Total Wizard - Stock Manager</field>
+        <field name="model_id" ref="model_assign_control_total_wizard"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('stock.group_stock_manager'))]"/>
+    </record>
+
+    <record id="assign_control_total_wizard_rule_stock_user" model="ir.rule">
+        <field name="name">Assign Control Total Wizard - Stock User</field>
+        <field name="model_id" ref="model_assign_control_total_wizard"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('stock.group_stock_user'))]"/>
+    </record>
+
+    <record id="assign_control_total_wizard_rule_mrp_manager" model="ir.rule">
+        <field name="name">Assign Control Total Wizard - MRP Manager</field>
+        <field name="model_id" ref="model_assign_control_total_wizard"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('mrp.group_mrp_manager'))]"/>
+    </record>
+
+    <record id="assign_control_total_wizard_rule_mrp_user" model="ir.rule">
+        <field name="name">Assign Control Total Wizard - MRP User</field>
+        <field name="model_id" ref="model_assign_control_total_wizard"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('mrp.group_mrp_user'))]"/>
+    </record>
+
+    <record id="assign_control_total_wizard_rule_admin" model="ir.rule">
+        <field name="name">Assign Control Total Wizard - Admin</field>
+        <field name="model_id" ref="model_assign_control_total_wizard"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('base.group_system'))]"/>
+    </record>
+
+    <!-- Reglas para las líneas del wizard -->
+    <record id="assign_control_total_wizard_line_rule_stock_manager" model="ir.rule">
+        <field name="name">Assign Control Total Wizard Line - Stock Manager</field>
+        <field name="model_id" ref="model_assign_control_total_wizard_line"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('stock.group_stock_manager'))]"/>
+    </record>
+
+    <record id="assign_control_total_wizard_line_rule_stock_user" model="ir.rule">
+        <field name="name">Assign Control Total Wizard Line - Stock User</field>
+        <field name="model_id" ref="model_assign_control_total_wizard_line"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('stock.group_stock_user'))]"/>
+    </record>
+
+    <record id="assign_control_total_wizard_line_rule_mrp_manager" model="ir.rule">
+        <field name="name">Assign Control Total Wizard Line - MRP Manager</field>
+        <field name="model_id" ref="model_assign_control_total_wizard_line"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('mrp.group_mrp_manager'))]"/>
+    </record>
+
+    <record id="assign_control_total_wizard_line_rule_mrp_user" model="ir.rule">
+        <field name="name">Assign Control Total Wizard Line - MRP User</field>
+        <field name="model_id" ref="model_assign_control_total_wizard_line"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('mrp.group_mrp_user'))]"/>
+    </record>
+
+    <record id="assign_control_total_wizard_line_rule_admin" model="ir.rule">
+        <field name="name">Assign Control Total Wizard Line - Admin</field>
+        <field name="model_id" ref="model_assign_control_total_wizard_line"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('base.group_system'))]"/>
+    </record>
+</odoo>

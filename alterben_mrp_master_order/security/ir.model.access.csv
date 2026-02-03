@@ -1,0 +1,12 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_mrp_add_open_mo_wizard,access.mrp.add.open.mo.wizard,model_mrp_add_open_mo_wizard,base.group_user,1,1,1,1
+access_assign_control_total_wizard_stock_user,access.assign.control.total.wizard.stock.user,model_assign_control_total_wizard,stock.group_stock_user,1,1,1,1
+access_assign_control_total_wizard_stock_manager,access.assign.control.total.wizard.stock.manager,model_assign_control_total_wizard,stock.group_stock_manager,1,1,1,1
+access_assign_control_total_wizard_mrp_user,access.assign.control.total.wizard.mrp.user,model_assign_control_total_wizard,mrp.group_mrp_user,1,1,1,1
+access_assign_control_total_wizard_mrp_manager,access.assign.control.total.wizard.mrp.manager,model_assign_control_total_wizard,mrp.group_mrp_manager,1,1,1,1
+access_assign_control_total_wizard_admin,access.assign.control.total.wizard.admin,model_assign_control_total_wizard,base.group_system,1,1,1,1
+access_assign_control_total_wizard_line_stock_user,access.assign.control.total.wizard.line.stock.user,model_assign_control_total_wizard_line,stock.group_stock_user,1,1,1,1
+access_assign_control_total_wizard_line_stock_manager,access.assign.control.total.wizard.line.stock.manager,model_assign_control_total_wizard_line,stock.group_stock_manager,1,1,1,1
+access_assign_control_total_wizard_line_mrp_user,access.assign.control.total.wizard.line.mrp.user,model_assign_control_total_wizard_line,mrp.group_mrp_user,1,1,1,1
+access_assign_control_total_wizard_line_mrp_manager,access.assign.control.total.wizard.line.mrp.manager,model_assign_control_total_wizard_line,mrp.group_mrp_manager,1,1,1,1
+access_assign_control_total_wizard_line_admin,access.assign.control.total.wizard.line.admin,model_assign_control_total_wizard_line,base.group_system,1,1,1,1

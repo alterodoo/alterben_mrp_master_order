@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <record id="view_workorder_novedades_wizard_form" model="ir.ui.view">
+    <field name="name">alterben.workorder.novedades.wizard.form</field>
+    <field name="model">alterben.workorder.novedades.wizard</field>
+    <field name="arch" type="xml">
+      <form string="Registrar Novedades">
+        <sheet>
+          <group class="ab_segment">
+            <field name="allowed_product_ids" invisible="1"/>
+            <group class="ab_segment">
+              <field name="workorder_id" readonly="1"/>
+              <field name="production_id" readonly="1"/>
+              <field name="workcenter_id" readonly="1"/>
+            </group>
+            <group string="Alertas de Calidad" class="ab_segment">
+              <field name="create_alert"/>
+              <field name="alert_name"/>
+              <field name="quality_team_id"/>
+              <field name="quality_tag_ids" widget="many2many_checkboxes" options="{'no_create': True}" class="ab_tags_box o_two_cols"/>
+                <field name="quality_main_cause_id"/>
+              <field name="description"/>
+            </group>
+          </group>
+
+          <group string="Desecho (Scrap)" class="ab_segment">
+            <field name="create_scrap"/>
+            <group class="ab_segment">
+              <field name="producto_desecho_tipo"/>
+              <field name="product_finished_id" invisible="1"/>
+              <field name="product_to_scrap_id" options="{'no_create': True}" domain="[('id','in', allowed_product_ids)]"/>
+              <field name="qty_scrap"/>
+              <field name="uom_id" readonly="1"/>
+              <field name="location_id"/>
+              <field name="scrap_location_id"/>
+            </group>
+          </group>
+        </sheet>
+        <footer>
+          <button string="Cancelar" class="btn-secondary" special="cancel"/>
+          <button string="Confirmar" type="object" name="action_confirm" class="btn-primary"/>
+        </footer>
+      </form>
+    </field>
+  </record>
+</odoo>
